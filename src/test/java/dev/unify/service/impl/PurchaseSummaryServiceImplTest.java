@@ -17,6 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PurchaseSummaryServiceImplTest {
 
+    private static final String APPLES = "Apples";
+    private static final String MILK = "Milk";
+    private static final String BREAD = "Bread";
+    private static final String SOUP = "Soup";
+    private static final String APPLES_10_OFF = "Apples 10% off";
+    private static final String TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD = "2 tins of soup and get a loaf of bread";
     private PurchaseSummaryServiceImpl purchaseSummaryService;
 
     @BeforeEach
@@ -27,7 +33,7 @@ class PurchaseSummaryServiceImplTest {
     @Test
     void getPurchaseSummaryShouldReturnExpectedPurchaseSummaryWhenEntryIsApplesMilkBreadNoOffer() {
         //Given
-        var basket = BasketUtils.fromList(List.of("Apples", "Milk", "Bread"));
+        var basket = BasketUtils.fromList(List.of(APPLES, MILK, BREAD));
         List<Offer> offers = Collections.emptyList();
         List<Discount> discounts = Collections.emptyList();
         var expectedPurchaseSummary = PurchaseSummary.builder()
@@ -44,14 +50,14 @@ class PurchaseSummaryServiceImplTest {
     @Test
     void getPurchaseSummaryShouldReturnExpectedPurchaseSummaryWhenEntryIsApplesMilkBreadWithOffer() {
         //Given
-        var basket = BasketUtils.fromList(List.of("Apples", "Milk", "Bread"));
+        var basket = BasketUtils.fromList(List.of(APPLES, MILK, BREAD));
         var appleTenPercentDiscountOffer = SimpleDiscountOffer.builder()
-                .label("Apples 10% off")
+                .label(APPLES_10_OFF)
                 .appliedTo(Item.APPLES)
                 .percentage(BigDecimal.valueOf(0.1))
                 .build();
         var halfBreadForTwoSoupDiscountOffer = ConditionalDiscountOffer.builder()
-                .label("2 tins of soup and get a loaf of bread")
+                .label(TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD)
                 .appliedTo(Item.BREAD)
                 .percentage(BigDecimal.valueOf(0.5))
                 .baseItem(Item.SOUP)
@@ -60,7 +66,7 @@ class PurchaseSummaryServiceImplTest {
         var offers = List.of(appleTenPercentDiscountOffer, halfBreadForTwoSoupDiscountOffer);
         var discounts = List.of(
                 Discount.builder()
-                        .label("Apples 10% off")
+                        .label(APPLES_10_OFF)
                         .amount(BigDecimal.valueOf(0.1))
                         .build()
         );
@@ -78,14 +84,14 @@ class PurchaseSummaryServiceImplTest {
     @Test
     void getPurchaseSummaryShouldReturnExpectedPurchaseSummaryWhenEntryIsSoupSoupBreadWithOffer() {
         //Given
-        var basket = BasketUtils.fromList(List.of("Soup", "Soup", "Bread"));
+        var basket = BasketUtils.fromList(List.of(SOUP, SOUP, BREAD));
         var appleTenPercentDiscountOffer = SimpleDiscountOffer.builder()
-                .label("Apples 10% off")
+                .label(APPLES_10_OFF)
                 .appliedTo(Item.APPLES)
                 .percentage(BigDecimal.valueOf(0.1))
                 .build();
         var halfBreadForTwoSoupDiscountOffer = ConditionalDiscountOffer.builder()
-                .label("2 tins of soup and get a loaf of bread")
+                .label(TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD)
                 .appliedTo(Item.BREAD)
                 .percentage(BigDecimal.valueOf(0.5))
                 .baseItem(Item.SOUP)
@@ -94,7 +100,7 @@ class PurchaseSummaryServiceImplTest {
         var offers = List.of(appleTenPercentDiscountOffer, halfBreadForTwoSoupDiscountOffer);
         var discounts = List.of(
                 Discount.builder()
-                        .label("2 tins of soup and get a loaf of bread")
+                        .label(TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD)
                         .amount(BigDecimal.valueOf(0.4))
                         .build()
         );
@@ -112,14 +118,14 @@ class PurchaseSummaryServiceImplTest {
     @Test
     void getPurchaseSummaryShouldReturnExpectedPurchaseSummaryWhenEntryIsApplesSoupSoupBreadWithOffer() {
         //Given
-        var basket = BasketUtils.fromList(List.of("Apples", "Soup", "Soup", "Bread", "Soup"));
+        var basket = BasketUtils.fromList(List.of(APPLES, SOUP, SOUP, BREAD, SOUP));
         var appleTenPercentDiscountOffer = SimpleDiscountOffer.builder()
-                .label("Apples 10% off")
+                .label(APPLES_10_OFF)
                 .appliedTo(Item.APPLES)
                 .percentage(BigDecimal.valueOf(0.1))
                 .build();
         var halfBreadForTwoSoupDiscountOffer = ConditionalDiscountOffer.builder()
-                .label("2 tins of soup and get a loaf of bread")
+                .label(TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD)
                 .appliedTo(Item.BREAD)
                 .percentage(BigDecimal.valueOf(0.5))
                 .baseItem(Item.SOUP)
@@ -128,11 +134,11 @@ class PurchaseSummaryServiceImplTest {
         var offers = List.of(appleTenPercentDiscountOffer, halfBreadForTwoSoupDiscountOffer);
         var discounts = List.of(
                 Discount.builder()
-                        .label("Apples 10% off")
+                        .label(APPLES_10_OFF)
                         .amount(BigDecimal.valueOf(0.1))
                         .build(),
                 Discount.builder()
-                        .label("2 tins of soup and get a loaf of bread")
+                        .label(TINS_OF_SOUP_AND_GET_A_LOAF_OF_BREAD)
                         .amount(BigDecimal.valueOf(0.4))
                         .build()
         );

@@ -14,6 +14,10 @@ import java.util.stream.Stream;
 
 class BasketUtilsTest {
 
+    private static final String APPLES = "Apples";
+    private static final String BREAD = "Bread";
+    private static final String SOUP = "Soup";
+
     @Test
     void getContentShouldReturnEmptyMapWhenInputIsNull() {
         //Given
@@ -37,7 +41,7 @@ class BasketUtilsTest {
 
     @ParameterizedTest
     @MethodSource("provideTestCasesForBasket")
-    void getItemCountShouldReturn0MapWhenItemIsNot_found(List<String> input) {
+    void getItemCountShouldReturn0MapWhenItemIsNotFound(List<String> input) {
         //Given
         var basket = BasketUtils.fromList(input);
         //When
@@ -69,11 +73,11 @@ class BasketUtilsTest {
     }
 
     private static Stream<Arguments> provideTestCasesForBasket() {
-        var onlyApples = List.of("Apples");
+        var onlyApples = List.of(APPLES);
         Map<Item, Integer> expectedContentOnlyApples = Map.of(Item.APPLES, 1);
-        var apples2Bread = List.of("Apples", "Bread", "Bread");
+        var apples2Bread = List.of(APPLES, BREAD, BREAD);
         Map<Item, Integer> expectedContentApples2Bread = Map.of(Item.APPLES, 1, Item.BREAD, 2);
-        var apples2Bread3Soup = List.of("Apples", "Bread", "Bread", "Soup", "Soup", "Soup");
+        var apples2Bread3Soup = List.of(APPLES, BREAD, BREAD, SOUP, SOUP, SOUP);
         Map<Item, Integer> expectedContentApples2Bread3Soup = Map.of(Item.APPLES, 1, Item.BREAD, 2, Item.SOUP, 3);
         return Stream.of(
                 Arguments.of(onlyApples, expectedContentOnlyApples),
