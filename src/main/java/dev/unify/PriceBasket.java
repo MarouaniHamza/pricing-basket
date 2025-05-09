@@ -14,6 +14,7 @@ import java.util.List;
 public class PriceBasket {
 
     public static void main(String[] args) {
+        final var basket = BasketUtils.fromList(List.of(args));
         final var appleTenPercentDiscountOffer = SimpleDiscountOffer.builder()
                 .label("Apples 10% off")
                 .appliedTo(Item.APPLES)
@@ -26,10 +27,10 @@ public class PriceBasket {
                 .baseItem(Item.SOUP)
                 .quantity(2)
                 .build();
-        final var purchaseSummary = new PurchaseSummaryServiceImpl().getPurchaseSummary(
-                BasketUtils.fromList(List.of(args)),
-                List.of(appleTenPercentDiscountOffer, halfBreadForTwoSoupDiscountOffer)
-        );
-        new ConsolePurchaseSummaryPrinter().print(purchaseSummary);
+        final var offers = List.of(appleTenPercentDiscountOffer, halfBreadForTwoSoupDiscountOffer);
+        final var purchaseSummaryService = new PurchaseSummaryServiceImpl();
+        final var purchaseSummary = purchaseSummaryService.getPurchaseSummary(basket, offers);
+        final var purchaseSummaryPrinter = new ConsolePurchaseSummaryPrinter();
+        purchaseSummaryPrinter.print(purchaseSummary);
     }
 }
